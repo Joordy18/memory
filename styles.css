@@ -1,0 +1,64 @@
+.cardgroup {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(2, 100px);
+    grid-gap: 10px;
+}
+
+.card {
+    background-color: darkgrey;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.card:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.card:nth-child(odd) {
+    background-color: dimgrey;
+}
+
+.card:nth-child(2n) {
+    background-color: slategrey;
+}
+
+.card:hover {
+    cursor: pointer;
+    background-color: green;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.item {
+    flex: 1 1 auto;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+
+@media (max-width: 1024px) {
+    .cardgroup {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .cardgroup {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .cardgroup {
+        grid-template-columns: 1fr;
+    }
+}
