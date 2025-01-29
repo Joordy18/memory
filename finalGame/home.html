@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Card Game</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+<div id="gameBoard" class="cardcontainer"></div>
+<div id="endMessage" class="hidden">Congratulations! You've matched all the cards!</div>
+<div>Moves: <span id="moveCount">0</span></div>
+
+<script>
+  const cards = [
+    'A', 'A', 'K', 'K', 'R', 'R', 'I', 'I', 'M', 'M', 'K', 'K', 'A', 'R', 'R', 'A'
+  ];
+
+  let shuffledCards = shuffle(cards);
+  let flippedCards = [];
+  let matchedCards = 0;
+  let moves = 0;
+
+  const gameBoard = document.getElementById('gameBoard');
+  const endMessage = document.getElementById('endMessage');
+  const moveCount = document.getElementById('moveCount');
+
+  // Create the cards on the board
+  shuffledCards.forEach((card, index) => {
+    const cardElement = document.createElement('div');
+    cardElement.classList.add('card');
+    cardElement.setAttribute('data-id', index);
+
+    const cardInner = document.createElement('div');
+    cardInner.classList.add('card-inner');
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-face', 'card-front');
+    cardFront.innerHTML = '?';
+
+    const cardBack = document.createElement('div');
+    cardBack.classList.add('card-face', 'card-back');
+    cardBack.innerHTML = card;
+
+    cardInner.appendChild(cardFront);
+    cardInner.appendChild(cardBack);
+    cardElement.appendChild(cardInner);
+    gameBoard.appendChild(cardElement);
+
+    cardElement.addEventListener('click', () => flipCard(cardElement, card));
+  });
+
+  // Shuffle function
+  function shuffle(array) {
+    let shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  // Flip card function
+  function flipCard(cardElement, card) {
+    if (flippedCards.length === 2 || cardElement.classList.contains('flip')) return;
+
+    moves++;
+    moveCount.textContent = moves;
+
+    cardElement.classList.add('flip');
+    flippedCards.push(cardElement);
+
+    if (flippedCards.length === 2) {
+      checkForMatch(cardElement);
+    }
+  }
+
+  // Check for match
+  function checkForMatch(cardElement) {
+    const [firstCard, secondCard] = flippedCards;
+
+    if (firstCard.querySelector('.card-back').innerHTML === secondCard.querySelector('.card-back').innerHTML) {
+      matchedCards += 2;
+      flippedCards = [];
+      if (matchedCards === cards.length) {
+        setTimeout(() => {
+          endMessage.classList.remove('hidden');
+        }, 500);
+      }
+    } else {
+      setTimeout(() => {
+        firstCard.classList.remove('flip');
+        secondCard.classList.remove('flip');
+        flippedCards = [];
+      }, 1000);
+    }
+  }
+</script>
+</body>
+</html>
