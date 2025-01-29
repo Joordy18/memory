@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--font-size);
+    background-color: var(--primary-color);
+}
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #e74c3c;
+    --font-size:20px;
+}
+
 .cardgroup {
     display: grid;
     grid-template-columns: repeat(3, 100px);
@@ -18,7 +32,7 @@
 }
 
 .card:nth-child(odd) {
-    background-color: dimgrey;
+    background-color: var(--secondary-color);
 }
 
 .card:nth-child(2n) {
@@ -43,6 +57,26 @@
     padding: 10px;
     text-align: center;
     margin: 10px;
+}
+
+blockquote {
+    font-style: italic;
+    color: green;
+    margin: 20px 0;
+    padding: 10px;
+    border-left: 5px solid black;
+}
+
+blockquote::before {
+    content: " ";
+    font-size: 2em;
+    color: blue;
+}
+
+blockquote::after {
+    content:" ";
+    font-size: 2em;
+    color: yellow;
 }
 
 @media (max-width: 1024px) {
